@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+    
+<head>
+    
+    {% block  title %}
+    <title>Anime | Template</title>
+    {% endblock  %}
+    {% include 'parts/_styles.html'%}
+    {% block search_style%}
+    <style>
+        .searchBox {
+            display: flex;
+            max-width: 230px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: #2f3640;
+            border-radius: 50px;
+            position: relative;
+          }
+          
+          .searchButton {
+            color: white;
+            position: absolute;
+            right: 8px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-2, linear-gradient(90deg, #2AF598 0%, #009EFD 100%));
+            border: 0;
+            display: inline-block;
+            transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+          }
+          /*hover effect*/
+          button:hover {
+            color: #fff;
+            background-color: #1A1A1A;
+            box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
+            transform: translateY(-3px);
+          }
+          /*button pressing effect*/
+          button:active {
+            box-shadow: none;
+            transform: translateY(0);
+          }
+          
+          .searchInput {
+            border: none;
+            background: none;
+            outline: none;
+            color: white;
+            font-size: 15px;
+            padding: 24px 46px 24px 26px;
+          }
+          
+          
+    </style>
+    {% endblock search_style%}
+</head>
+
+<body>
+    {% include 'parts/header.html'%}
+    {% block tranding %}
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="trending__product">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>Trending Now</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="btn__all">
+                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for anime in animes %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="{{ anime.cover_image.url }}">
+                                        <div class="ep">{{ anime.episode_count }}/{{ anime.episode_count }}</div>
+                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                        <div class="view"><i class="fa fa-eye"></i>{{ anime.views }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            {% for i in anime.category.all %}
+                                                <li>{{ i }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
+                                    </div>
+                                </div> 
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <div class="popular__product">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>Popular Shows</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="btn__all">
+                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for anime in animes %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="{{ anime.cover_image.url }}">
+                                        <div class="ep">{{ anime.episode_count }}/{{ anime.episode_count }}</div>
+                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                        <div class="view"><i class="fa fa-eye"></i>{{ anime.views }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            {% for i in anime.category.all %}
+                                                <li>{{ i }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
+                                    </div>
+                                </div> 
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="recent__product">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>Recently Added Shows</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="btn__all">
+                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for anime in animes %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="{{ anime.cover_image.url }}">
+                                        <div class="ep">{{ anime.episode_count }}/{{ anime.episode_count }}</div>
+                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                        <div class="view"><i class="fa fa-eye"></i>{{ anime.views }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            {% for i in anime.category.all %}
+                                                <li>{{ i }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
+                                    </div>
+                                </div> 
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <div class="live__product">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>Live Action</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="btn__all">
+                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for anime in animes %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="{{ anime.cover_image.url }}">
+                                        <div class="ep">{{ anime.episode_count }}/{{ anime.episode_count }}</div>
+                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                        <div class="view"><i class="fa fa-eye"></i>{{ anime.views }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            {% for i in anime.category.all %}
+                                                <li>{{ i }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
+                                    </div>
+                                </div> 
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-8">
+                    <div class="product__sidebar">
+                        <div class="product__sidebar__view">
+                            <div class="section-title">
+                                <h5>Top Views</h5>
+                            </div>
+                            <ul class="filter__controls">
+                                <li class="active" data-filter="*">Day</li>
+                                <li data-filter=".week">Week</li>
+                                <li data-filter=".month">Month</li>
+                                <li data-filter=".years">Years</li>
+                            </ul>
+                            {% for anime in animes %}
+                            <div class="filter__gallery">
+                                <div class="product__sidebar__view__item set-bg mix day years"
+                                data-setbg="{{ anime.cover_image.url }}">
+                                <div class="ep">{{ anime.episode_count }}/{{ anime.episode_count }}</div>
+                                <div class="view"><i class="fa fa-eye"></i> {{anime.views}} </div>
+                                <h5><a href="#">{{ anime.title }}</a></h5>
+                            </div>
+                            {% endfor %}
+                        
+                    
+                
+            </div>
+        </div>
+    </div>
+    {% endblock  %}
+    {% block content %}
+    <div class="product__sidebar__comment">
+        <div class="section-title">
+            <h5>New Comment</h5>
+        </div>
+        
+        {% for anime in animes %}
+        <div class="product__sidebar__comment__item">
+            <div class="product__sidebar__comment__item__pic">
+                <img src="{{ anime.cover_image.url }}" alt="" width='100'>
+            </div>
+            <div class="product__sidebar__comment__item__text">
+                <ul>
+                    {% for i in anime.category.all %}
+                    <li>{{ i }}</li>
+                    {% endfor %}
+
+                </ul>
+                <h5><a href="#">{{ anime.title }}</a></h5>
+                <span><i class="fa fa-eye"></i> {{ anime.views}} Viewes</span>
+            </div>
+        </div>
+        {% endfor %}
+        {% endblock %}
+    </div>
+
+
+<!-- Product Section End -->
+
+<!-- Footer Section Begin -->
+
+  <!-- Footer Section End -->
+
+  <!-- Search model Begin -->
+
+
+
+<!-- Search model end -->
+
+{% include 'parts/_scripts.html' %}
+
+</body>
+
+</html>

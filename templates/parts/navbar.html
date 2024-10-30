@@ -1,0 +1,20 @@
+<div class="header__nav">
+    <nav class="header__menu mobile-menu">
+        <ul>
+            <li class="active"><a href="{% url 'homepage' %}">Homepage</a></li>
+            <li>
+                <a href="{% url 'categories' %}">Categories <span class="arrow_carrot-down"></span></a>
+                <ul class="dropdown">
+                    <li><a href="{% url 'categories' %}">Categories</a></li>
+                    <li><a href="{% url 'anime_details' %}">Anime Details</a></li>
+                    <li><a href="{% url 'anime_watching' %}">Anime Watching</a></li>
+                    <li><a href="{% url 'blog_details' %}">Blog Details</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                </ul>
+            </li>
+            <li><a href="{% url 'blog' %}">Our Blog</a></li>
+            <li><a href="{% url 'contacts' %}">Contacts</a></li>
+        </ul>
+    </nav>
+</div>
