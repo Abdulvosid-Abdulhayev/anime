@@ -1,20 +1,68 @@
 <div class="header__nav">
     <nav class="header__menu mobile-menu">
         <ul>
-            <li class="active"><a href="{% url 'homepage' %}">Homepage</a></li>
-            <li>
-                <a href="{% url 'categories' %}">Categories <span class="arrow_carrot-down"></span></a>
-                <ul class="dropdown">
-                    <li><a href="{% url 'categories' %}">Categories</a></li>
-                    <li><a href="{% url 'anime_details' %}">Anime Details</a></li>
-                    <li><a href="{% url 'anime_watching' %}">Anime Watching</a></li>
-                    <li><a href="{% url 'blog_details' %}">Blog Details</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
+            <li class="active"><a href="{% url 'home' %}">Homepage</a></li>
+            <li class="dropdown">
+                <a href="{% url 'category' %}">Categories <span class="arrow_carrot-down"></span></a>
+                <ul class="dropdown-menu">
+                    {% for category in categories %}
+                    <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
                 </ul>
             </li>
-            <li><a href="{% url 'blog' %}">Our Blog</a></li>
-            <li><a href="{% url 'contacts' %}">Contacts</a></li>
+            <li><a href="#">Our Blog</a></li>
+            <li><a href="#">Contacts</a></li>
         </ul>
     </nav>
 </div>
+
+<style>
+    /* Asosiy menyu uslublari */
+    .header__nav {
+        position: relative; /* dropdown uchun asosiy kontekst */
+    }
+
+    /* Dropdown menyu shaffof qora fon bilan va to'g'ri o'lchamda */
+    .header__menu .dropdown:hover .dropdown-menu {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 ta ustun */
+        background-color: rgba(0, 0, 0, 0.85); /* Shaffof qora fon */
+        position: absolute;
+        left: 0;
+        top: 100%; /* Kategoriya tugmasi ostida chiqadi */
+        width: auto; /* Kengligini menyu o'lchamiga moslash */
+        max-width: 600px; /* Maksimal kenglik */
+        max-height: 300px; /* Maksimal balandlik */
+        overflow-y: auto; /* Ichki scroll qo‘shish */
+        padding: 20px;
+        gap: 10px;
+        z-index: 1000; /* Yuqoriroqda ko'rinishi uchun */
+    }
+
+    /* Kategoriya elementlari uslubi */
+    .header__menu .dropdown-menu li {
+        list-style: none;
+        text-align: center;
+    }
+
+    .header__menu .dropdown-menu li a {
+        color: #fff; /* Oq matn */
+        text-decoration: none;
+        padding: 8px;
+        display: block;
+        transition: background-color 0.2s;
+    }
+
+    .header__menu .dropdown-menu li a:hover {
+        background-color: #333; /* Hover fon */
+        border-radius: 3px;
+    }
+
+    /* Mobil uchun moslashtirish */
+    @media (max-width: 768px) {
+        .header__menu .dropdown-menu {
+            grid-template-columns: repeat(2, 1fr); /* Mobilda 2 ustun */
+            max-width: 100%; /* Kenglikni to'liq ekran */
+        }
+    }
+</style>

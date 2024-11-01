@@ -19,41 +19,44 @@
             background: #2f3640;
             border-radius: 50px;
             position: relative;
-          }
-          
-          .searchButton {
+        }
+        
+        .searchButton {
             color: white;
             position: absolute;
             right: 8px;
-            width: 50px;
-            height: 50px;
+            width: 40px; /* Reduced button width */
+            height: 40px; /* Reduced button height */
             border-radius: 50%;
             background: var(--gradient-2, linear-gradient(90deg, #2AF598 0%, #009EFD 100%));
             border: 0;
             display: inline-block;
             transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-          }
-          /*hover effect*/
-          button:hover {
+        }
+        
+        /*hover effect*/
+        button:hover {
             color: #fff;
             background-color: #1A1A1A;
             box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
             transform: translateY(-3px);
-          }
-          /*button pressing effect*/
-          button:active {
+        }
+        
+        /*button pressing effect*/
+        button:active {
             box-shadow: none;
             transform: translateY(0);
-          }
-          
-          .searchInput {
+        }
+        
+        .searchInput {
             border: none;
             background: none;
             outline: none;
             color: white;
             font-size: 15px;
-            padding: 24px 46px 24px 26px;
-          }
+            padding: 12px 40px 12px 20px; /* Reduced padding for smaller height */
+        }
+        
           
           
     </style>
@@ -61,7 +64,7 @@
 </head>
 
 <body>
-    {% include 'parts/header.html'%}
+    {% include 'parts/header.html' %}
     {% block tranding %}
     <section class="product spad">
         <div class="container">
@@ -95,7 +98,7 @@
                                                 <li>{{ i }}</li>
                                             {% endfor %}
                                         </ul>
-                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <h5><a href="{% url 'detail' selected_category|default:'All' anime.slug %}">{{ anime.title }}</a></h5>
                                         <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
                                     </div>
                                 </div> 
@@ -132,7 +135,7 @@
                                                 <li>{{ i }}</li>
                                             {% endfor %}
                                         </ul>
-                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <h5><a href="{% url 'detail' selected_category|default:'All' anime.slug %}">{{ anime.title }}</a></h5>
                                         <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
                                     </div>
                                 </div> 
@@ -168,7 +171,7 @@
                                                 <li>{{ i }}</li>
                                             {% endfor %}
                                         </ul>
-                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <h5><a href="{% url 'detail' selected_category|default:'All' anime.slug %}">{{ anime.title }}</a></h5>
                                         <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
                                     </div>
                                 </div> 
@@ -205,7 +208,7 @@
                                                 <li>{{ i }}</li>
                                             {% endfor %}
                                         </ul>
-                                        <h5><a href="#">{{ anime.title }}</a></h5>
+                                        <h5><a href="{% url 'detail' selected_category|default:'All' anime.slug %}">{{ anime.title }}</a></h5>
                                         <p>Price: ${{ anime.price }}</p>  <!-- Displaying the price here -->
                                     </div>
                                 </div> 
@@ -233,7 +236,7 @@
                                 data-setbg="{{ anime.cover_image.url }}">
                                 <div class="ep">{{ anime.episode_count }}/{{ anime.episode_count }}</div>
                                 <div class="view"><i class="fa fa-eye"></i> {{anime.views}} </div>
-                                <h5><a href="#">{{ anime.title }}</a></h5>
+                                <h5><a href="{% url 'detail' selected_category|default:'All' anime.slug %}">{{ anime.title }}</a></h5>
                             </div>
                             {% endfor %}
                         
@@ -259,29 +262,43 @@
                     {% for i in anime.category.all %}
                     <li>{{ i }}</li>
                     {% endfor %}
-
                 </ul>
-                <h5><a href="#">{{ anime.title }}</a></h5>
-                <span><i class="fa fa-eye"></i> {{ anime.views}} Viewes</span>
+                <h5><a href="{% url 'detail' selected_category|default:'All' anime.slug %}">{{ anime.title }}</a></h5>
+                <span><i class="fa fa-eye"></i> {{anime.views}} Viewes</span>
             </div>
         </div>
         {% endfor %}
-        {% endblock %}
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+            
+        
+        {% endblock %}
 
 
 <!-- Product Section End -->
 
 <!-- Footer Section Begin -->
+<!-- Footer Section End -->
 
-  <!-- Footer Section End -->
-
-  <!-- Search model Begin -->
+<!-- Search model Begin -->
+{% include 'parts/footer.html' %}
 
 
 
 <!-- Search model end -->
-
+{% block search%}
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch"><i class="icon_close"></i></div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+{% endblock %}
 {% include 'parts/_scripts.html' %}
 
 </body>

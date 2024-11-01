@@ -8,7 +8,7 @@ class EpisodeInline(admin.TabularInline):
 
 @admin.register(Anime)
 class AnimeAdmin(admin.ModelAdmin):
-    list_display = ("title", "slug", "release_date", "episode_count", "views", "coments_count", "price")
+    list_display = ("title", "slug", "release_date", "episode_count", "views", "coments_count", "price", "header_publish")
     search_fields = ("title", "description", "slug")
     list_filter = ("release_date", "category")
     prepopulated_fields = {"slug": ("title",)}
@@ -17,16 +17,17 @@ class AnimeAdmin(admin.ModelAdmin):
     inlines = [EpisodeInline]  
     fieldsets = (
         ("Asosiy Ma'lumotlar", {
-            "fields": ("title", "slug", "description", "category", "release_date", "episode_count", "price")
+            "fields": ("title", "slug", "description", "category", "release_date", "episode_count", "price", "header_publish")
         }),
         ("Rasm", {
-            "fields": ("cover_image",),
+            "fields": ("cover_image", "header_image"),
         }),
         ("Statistika", {
             "fields": ("views", "coments_count"),
             "classes": ("collapse",),
         }),
     )
+    
 
 # Category modeli uchun admin sozlamalari
 @admin.register(Category)
