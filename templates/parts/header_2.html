@@ -81,28 +81,3 @@
         <div id="mobile-menu-wrap"></div>
     </div>
 </header>
-<section class="hero">
-    <div class="container">
-        <div class="hero__slider owl-carousel">
-            {% for anime in animes %}
-            {% if anime.header_publish == True %}
-            <!-- Slide 1 -->
-            <div class="hero__items set-bg" data-setbg="{{ anime.header_image.url }}">
-                <div class="hero__text">
-                    <div class="categories">
-                        {% for i in animes.category.all %}
-                            <span class="label">{{ i }}</span>{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                    <h2>{{anime.title}}</h2>
-                    <p>{{ anime.description|slice:":10" }}</p>
-                    <a href="{% url 'detail' selected_category='All' slug=anime.slug %}"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
-                </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-
-
-        </div>
-    </div>
-</section>
