@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.db.models import Count, Q
 from .models import Anime, Category, Coments
+from django.core.paginator import Paginator
 
 # Kategoriya bo‘yicha anime sonlarini olish funksiyasi
 def get_category_count():
@@ -9,38 +10,41 @@ def get_category_count():
     category_count = {category.name: category.anime_count for category in categories}
     return category_count
 
-from django.shortcuts import render
-from django.views import View
-from django.db.models import Q
-from .models import Anime, Category
-
 class SearchView(View):
     def post(self, request):
         query = request.POST.get('q', '')  # `q` ni `POST` so‘rovidan olish
         if query:
-            # Faqat noyob `title` bo‘yicha `distinct()` qilish
             animes = Anime.objects.filter(
                 Q(title__icontains=query) |
                 Q(description__icontains=query) |
                 Q(category__name__icontains=query)
-            ).distinct()  # Unikal natijalarni olish uchun `distinct()`
+            ).distinct()
         else:
-            animes = Anime.objects.none()  # Qidiruv bo‘lmasa, bo‘sh natija qaytariladi
-        category_count = get_category_count()
+            animes = Anime.objects.none()
+
+        # Paginatsiya qilish
+        paginator = Paginator(animes, 2)  # Har bir sahifada 2 ta obyekt
+        page_number = request.GET.get('page', 1)  # Sahifa raqamini olish
+        page_obj = paginator.get_page(page_number)
+
         categories = Category.objects.all()
+        category_count = get_category_count()
         context = {
-            "animes": animes,
+            "page_obj": page_obj,
             "categories": categories,
             "query": query,
             "category_count": category_count,
-            
         }
         return render(request, 'search_results.html', context=context)
-
 
 class Home(View):
     def get(self, request):
         animes = Anime.objects.all()
+        animes = animes[:9]
+        
+        # Paginatsiya qilish
+
+
         categories = Category.objects.all()
         category_count = get_category_count()
 
@@ -64,8 +68,13 @@ class Caregory(View):
             animes = Anime.objects.all()
             selected_category = "All"
 
+        # Paginatsiya qilish
+        paginator = Paginator(animes, 2)  # Har bir sahifada 2 ta obyekt
+        page_number = request.GET.get('page', 1)  # Sahifa raqamini olish
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            "animes": animes,
+            "page_obj": page_obj,
             "categories": categories,
             "selected_category": selected_category,
             "category_count": category_count,
@@ -104,3 +113,23 @@ class Login(View):
             "category_count": category_count,
         }
         return render(request, 'login.html', context=context)
+
+class ContactListView(View):
+    def get(self, request):
+        anime_list = Anime.objects.all()
+        
+        # Paginatsiya qilish
+        paginator = Paginator(anime_list, 2)  # Har bir sahifada 2 ta obyekt
+        page_number = request.GET.get('page', 1)  # Sahifa raqamini olish
+        page_obj = paginator.get_page(page_number)
+        
+        categories = Category.objects.all()
+        category_count = get_category_count()
+
+        context = {
+            "page_obj": page_obj,
+            "categories": categories,
+            "category_count": category_count,
+        }
+        
+        return render(request, 'contact_list.html', context=context)
